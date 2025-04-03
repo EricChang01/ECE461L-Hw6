@@ -8,7 +8,7 @@ function Project(props) {
 
     const joinProject = async (projectId) => {
         try {
-          const response = await fetch(`/joinProject?projectid=${projectId}`);
+          const response = await fetch(`/api/joinProject?projectid=${projectId}`);
           const data = await response.json();
           alert(`Joined ${data.projectId}`);
         } catch (error) {
@@ -18,7 +18,7 @@ function Project(props) {
 
       const leaveProject = async (projectId) => {
         try {
-          const response = await fetch(`/leaveProject?projectid=${projectId}`);
+          const response = await fetch(`/api/leaveProject?projectid=${projectId}`);
           const data = await response.json();
           alert(`Left ${data.projectId}`);
         } catch (error) {

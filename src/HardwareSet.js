@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {Button, ButtonGroup, TextField} from '@mui/material';
-// const api_endpoint = 'https://ece461l-hw6-e65d16f70191.herokuapp.com'
 
 function HardwareSet(props) {
     const [qty, setQty] = useState('');
@@ -11,7 +10,7 @@ function HardwareSet(props) {
     
     const checkInHardware = async (projectId, qty) => {
         try {
-          const response = await fetch(`/checkInHardware?projectId=${projectId}&qty=${qty}`);
+          const response = await fetch(`/api/checkInHardware?projectId=${projectId}&qty=${qty}`);
           const data = await response.json();
           alert(`${data.qty} hardware checked in`);
         } catch (error) {
@@ -22,7 +21,7 @@ function HardwareSet(props) {
       // Function to call the checkOutHardware API
       const checkOutHardware = async (projectId, qty) => {
         try {
-          const response = await fetch(`/checkOutHardware?projectid=${projectId}&qty=${qty}`);
+          const response = await fetch(`/api/checkOutHardware?projectid=${projectId}&qty=${qty}`);
           const data = await response.json();
           alert(`${data.qty} hardware checked out`);
         } catch (error) {

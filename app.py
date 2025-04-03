@@ -1,19 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 
-app = Flask(__name__, static_folder='./build', static_url_path='/')
+app = Flask(__name__, static_folder='./build', static_url_path='')
 CORS(app)
-# Endpoint for checking in hardware
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
+# Serve React static files
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    # If the file exists in the build directory, serve it.
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    # Otherwise, serve index.html (for React Router)
+    return send_from_directory(app.static_folder, 'index.html')
 
-@app.errorhandler(404)
-def not_found(e):
-    return app.send_static_file('index.html')
-
-@app.route('/checkInHardware', methods=['GET'])
+@app.route('/api/checkInHardware', methods=['GET'])
 def check_in_hardware():
     project_id = request.args.get('projectId')
     qty = request.args.get('qty')
@@ -24,7 +25,7 @@ def check_in_hardware():
     })
 
 # Endpoint for checking out hardware
-@app.route('/checkOutHardware', methods=['GET'])
+@app.route('/api/checkOutHardware', methods=['GET'])
 def check_out_hardware():
     project_id = request.args.get('projectid')
     qty = request.args.get('qty')
@@ -35,7 +36,7 @@ def check_out_hardware():
     })
 
 # Endpoint for joining a project
-@app.route('/joinProject', methods=['GET'])
+@app.route('/api/joinProject', methods=['GET'])
 def join_project():
     project_id = request.args.get('projectid')
     
@@ -44,7 +45,7 @@ def join_project():
     })
 
 # Endpoint for leaving a project
-@app.route('/leaveProject', methods=['GET'])
+@app.route('/api/leaveProject', methods=['GET'])
 def leave_project():
     project_id = request.args.get('projectid')
 
@@ -53,4 +54,5 @@ def leave_project():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+    # app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+    app.run(debug=True)
