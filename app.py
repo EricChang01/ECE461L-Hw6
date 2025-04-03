@@ -8,11 +8,10 @@ CORS(app)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    # If the file exists in the build directory, serve it.
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
-    # Otherwise, serve index.html (for React Router)
-    return send_from_directory(app.static_folder, 'index.html')
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/api/checkInHardware', methods=['GET'])
 def check_in_hardware():
