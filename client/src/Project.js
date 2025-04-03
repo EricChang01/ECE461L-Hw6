@@ -1,14 +1,14 @@
 import {useState} from 'react';
 import HardwareSets from './HardwareSets';
 
-const api_endpoint = 'https://ece461l-hw6-e65d16f70191.herokuapp.com'
+// const api_endpoint = 'https://ece461l-hw6-e65d16f70191.herokuapp.com'
 
 function Project(props) {
     const [join, setJoin] = useState("Join");
 
     const joinProject = async (projectId) => {
         try {
-          const response = await fetch(`${api_endpoint}/joinProject?projectid=${projectId}`);
+          const response = await fetch(`/joinProject?projectid=${projectId}`);
           const data = await response.json();
           alert(`Joined ${data.projectId}`);
         } catch (error) {
@@ -18,7 +18,7 @@ function Project(props) {
 
       const leaveProject = async (projectId) => {
         try {
-          const response = await fetch(`${api_endpoint}/leaveProject?projectid=${projectId}`);
+          const response = await fetch(`/leaveProject?projectid=${projectId}`);
           const data = await response.json();
           alert(`Left ${data.projectId}`);
         } catch (error) {
