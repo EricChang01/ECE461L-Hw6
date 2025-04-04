@@ -13,45 +13,49 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/api/checkInHardware', methods=['GET'])
+# Endpoint for checking in hardware (POST)
+@app.route('/api/checkInHardware', methods=['POST'])
 def check_in_hardware():
-    project_id = request.args.get('projectId')
-    qty = request.args.get('qty')
+    data = request.get_json() or {}
+    project_id = data.get('projectId')
+    qty = data.get('qty')
     
     return jsonify({
         "projectId": project_id,
         "qty": qty,
     })
 
-# Endpoint for checking out hardware
-@app.route('/api/checkOutHardware', methods=['GET'])
+# Endpoint for checking out hardware (POST)
+@app.route('/api/checkOutHardware', methods=['POST'])
 def check_out_hardware():
-    project_id = request.args.get('projectid')
-    qty = request.args.get('qty')
+    data = request.get_json() or {}
+    project_id = data.get('projectId')
+    qty = data.get('qty')
     
     return jsonify({
         "projectId": project_id,
         "qty": qty,
     })
 
-# Endpoint for joining a project
-@app.route('/api/joinProject', methods=['GET'])
+# Endpoint for joining a project (POST)
+@app.route('/api/joinProject', methods=['POST'])
 def join_project():
-    project_id = request.args.get('projectid')
+    data = request.get_json() or {}
+    project_id = data.get('projectId')
     
     return jsonify({
         "projectId": project_id,
     })
 
-# Endpoint for leaving a project
-@app.route('/api/leaveProject', methods=['GET'])
+# Endpoint for leaving a project (POST)
+@app.route('/api/leaveProject', methods=['POST'])
 def leave_project():
-    project_id = request.args.get('projectid')
+    data = request.get_json() or {}
+    project_id = data.get('projectId')
 
     return jsonify({
         "projectId": project_id,
     })
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
     app.run(debug=True)

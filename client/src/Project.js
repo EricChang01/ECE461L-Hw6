@@ -7,24 +7,32 @@ function Project(props) {
     const [join, setJoin] = useState("Join");
 
     const joinProject = async (projectId) => {
-        try {
-          const response = await fetch(`/api/joinProject?projectid=${projectId}`);
-          const data = await response.json();
-          alert(`Joined ${data.projectId}`);
-        } catch (error) {
-          console.error('Error joining project:', error);
-        }
-      };
-
-      const leaveProject = async (projectId) => {
-        try {
-          const response = await fetch(`/api/leaveProject?projectid=${projectId}`);
-          const data = await response.json();
-          alert(`Left ${data.projectId}`);
-        } catch (error) {
-          console.error('Error leaving project:', error);
-        }
-      };    
+      try {
+        const response = await fetch('/api/joinProject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ projectId })
+        });
+        const data = await response.json();
+        alert(`Joined ${data.projectId}`);
+      } catch (error) {
+        console.error('Error joining project:', error);
+      }
+    };
+    
+    const leaveProject = async (projectId) => {
+      try {
+        const response = await fetch('/api/leaveProject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ projectId })
+        });
+        const data = await response.json();
+        alert(`Left ${data.projectId}`);
+      } catch (error) {
+        console.error('Error leaving project:', error);
+      }
+    };
 
     const handleClick = async () => {
         if (join == "Join") {

@@ -8,26 +8,33 @@ function HardwareSet(props) {
         setQty(e.target.value);
       };
     
-    const checkInHardware = async (projectId, qty) => {
+      const checkInHardware = async (projectId, qty) => {
         try {
-          const response = await fetch(`/api/checkInHardware?projectId=${projectId}&qty=${qty}`);
+          const response = await fetch('/api/checkInHardware', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projectId, qty })
+          });
           const data = await response.json();
           alert(`${data.qty} hardware checked in`);
         } catch (error) {
           console.error('Error checking in hardware:', error);
         }
       };
-    
-      // Function to call the checkOutHardware API
+      
       const checkOutHardware = async (projectId, qty) => {
         try {
-          const response = await fetch(`/api/checkOutHardware?projectid=${projectId}&qty=${qty}`);
+          const response = await fetch('/api/checkOutHardware', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projectId, qty })
+          });
           const data = await response.json();
           alert(`${data.qty} hardware checked out`);
         } catch (error) {
           console.error('Error checking out hardware:', error);
         }
-      };    
+      };
 
     const HwSet = "HWSet " + props.hw_id + ": " + props.hw_asgn + "/" + props.tot_avail;
     return (
