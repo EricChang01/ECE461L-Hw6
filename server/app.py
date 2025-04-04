@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 
-app = Flask(__name__, static_folder='./build', static_url_path='')
+app = Flask(__name__, static_folder='../client/build', static_url_path='')
 CORS(app)
 # Serve React static files
 @app.route('/', defaults={'path': ''})
